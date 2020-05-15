@@ -40,7 +40,15 @@ class UI {
         <td><a href="#" class="btn bth-danger btn-sm delete">X</a></td>
         `
         list.appendChild(row);
-        
+    }
+
+    // Method to clear the input fields
+    static clearFields() {
+        document.querySelector('#title').value = '';
+        document.querySelector('#author').value = '';
+        document.querySelector('#isbn').value = '';
+
+
     }
 }
 
@@ -66,6 +74,9 @@ document.querySelector('#book-form').addEventListener('submit', (e) => {
 
     // Add Book to UI
     UI.addBookToList(book);
+
+    // Clear input fields
+    UI.clearFields();
 });
 
 // Event: Remove a Book
