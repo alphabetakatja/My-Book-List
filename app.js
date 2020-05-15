@@ -49,12 +49,29 @@ class UI {
         
     }
 
+    // Show alert box
+    static showAlert(message, className) {
+        const div = document.createElement('div');
+        div.className = `alert alert-${className}`;
+        div.appendChild(document.createTextNode(message));
+
+        // Container is the parent and we want to insert it before the form
+        const container = document.querySelector('.container');
+        const form = document.querySelector('#book-form');
+        container.insertBefore(div, form);
+
+        // Make the alert disappear after 3 seconds
+        setTimeout(() => document.querySelector('.alert').remove(), 3000);
+    }
+
     // Method to clear the input fields
     static clearFields() {
         document.querySelector('#title').value = '';
         document.querySelector('#author').value = '';
         document.querySelector('#isbn').value = '';
     }
+
+
 
    
 
@@ -77,7 +94,7 @@ document.querySelector('#book-form').addEventListener('submit', (e) => {
 
     // Validate 
     if(title === '' || author === '' || isbn === '') {
-        alert('Please fill in all fields...');
+        UI.showAlert('Please fill in all fields...', 'danger');
     } else {
         // Instantiate book
         const book = new Book(title, author, isbn);
