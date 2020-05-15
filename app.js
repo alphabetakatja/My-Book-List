@@ -10,20 +10,7 @@ class Book {
 // UI Class: Handles UI Tasks
 class UI {
     static displayBooks() {
-        const StoredBooks = [
-            {
-                title: 'Just Kids',
-                author: 'Patti Smith',
-                isbn: '181818'
-            },
-            {
-                title: 'Ciganin, ali najljepsi',
-                author: 'Kristian Novak',
-                isbn: '232323'
-            }
-        ];
-
-        const books = StoredBooks;
+        const books = Store.getBooks();
 
         books.forEach(book => UI.addBookToList(book));  
     }
@@ -71,13 +58,56 @@ class UI {
         document.querySelector('#isbn').value = '';
     }
 
-
-
-   
-
 }
 
 // Store Class: Handles Storage
+// local storage stores key value pairs, 
+// it has to be a string, it cannot be an object
+class Store {
+    static getBooks() {
+        let books;
+        // we wanna check if there no item called books
+        if(localStorage.getItem('books') === null) {
+            //  we want to set books to an empty array
+            books = [];
+        } else {
+            // it's gonna be stored as a string, so we need to run this through a JSON.parse method,
+            //  so we can treat it as a regular js array of objects
+            books = JSON.parse(localStorage.getItem('books'));
+        }
+        return books;
+    }
+
+    static addBook(book) {
+        // fetch books from local storage
+        const books = Store.getBooks();
+
+        // we need to push on to it the book
+        books.push(book);
+
+        // we need to reset it to local storage, 
+        // and we need to wrap the books in JSON.stringify method to actually add it
+        localStorage.setItem('books', JSON.stringify(books));
+    }
+
+    static removeBook(isbn) {
+        // we need to fetch the books
+        const books = Store.getBooks();
+
+        // we need to loops through it
+        books.forEach((book, index) => {
+            // we need to check if the isbn of the book that is being looped through
+            //  matches the one passed as a parameter in the function
+            if (book.isbn === isbn) {
+                // if they match we are removing this book item
+                books.splice(index, 1);
+            }
+        });
+
+        // we need to reset local storage with that book removed
+        localStorage.setItem('books', JSON.stringify(books));
+    }
+}
 
 // Event: Display Books
 document.addEventListener('DOMContentLoaded', UI.displayBooks);
