@@ -103,6 +103,9 @@ document.querySelector('#book-form').addEventListener('submit', (e) => {
         // Add Book to UI
         UI.addBookToList(book);
 
+        // Show success message
+        UI.showAlert("Book Added", "success");
+
         // Clear input fields
         UI.clearFields();
         }
@@ -116,4 +119,7 @@ document.querySelector('#book-list').addEventListener('click', (e) => {
     // event propagation - we are targeting the actual book list, 
     // and then in the deleteBook method, if it contains the class delete, we remove it
     UI.deleteBook(e.target);
+
+    // Show delete message
+    UI.showAlert("Book Removed", "info");
 })
