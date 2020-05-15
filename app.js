@@ -41,15 +41,23 @@ class UI {
         `
         list.appendChild(row);
     }
+    // 
+    static deleteBook(el) { 
+        if(el.classList.contains('delete')) {
+            el.parentElement.parentElement.remove();
+        }
+        
+    }
 
     // Method to clear the input fields
     static clearFields() {
         document.querySelector('#title').value = '';
         document.querySelector('#author').value = '';
         document.querySelector('#isbn').value = '';
-
-
     }
+
+   
+
 }
 
 // Store Class: Handles Storage
@@ -80,3 +88,11 @@ document.querySelector('#book-form').addEventListener('submit', (e) => {
 });
 
 // Event: Remove a Book
+
+document.querySelector('#book-list').addEventListener('click', (e) => {
+    // e.target is the element in the DOM that we're clicking on
+    // console.log(e.target)
+    // event propagation - we are targeting the actual book list, 
+    // and then in the deleteBook method, if it contains the class delete, we remove it
+    UI.deleteBook(e.target);
+})
