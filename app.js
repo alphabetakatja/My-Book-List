@@ -151,7 +151,11 @@ document.querySelector('#book-list').addEventListener('click', (e) => {
     // console.log(e.target)
     // event propagation - we are targeting the actual book list, 
     // and then in the deleteBook method, if it contains the class delete, we remove it
+    
     UI.deleteBook(e.target);
+
+    // Remove Book from the store
+    Store.removeBook(e.target.parentElement.previousElementSibling.textContent);
 
     // Show delete message
     UI.showAlert("Book Removed", "info");
